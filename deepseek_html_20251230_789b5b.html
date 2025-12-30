@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armspark - Bilateral Rehabilitation Device for Hemiplegic Patients</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-blue: #1e88e5;
+            --secondary-blue: #42a5f5;
+            --spark-orange: #ff6b35;
+            --spark-orange-light: #ffe8e0;
+            --light-blue: #e3f2fd;
+            --light-blue-2: #bbdefb;
+            --accent-green: #4caf50;
+            --accent-green-light: #e8f5e9;
+            --accent-purple: #7e57c2;
+            --accent-purple-light: #f3e5f5;
+            --text-dark: #2c3e50;
+            --text-light: #546e7a;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --light-gray-2: #eceff1;
+            --dark-blue: #1565c0;
+            --spark-gradient: linear-gradient(135deg, #1e88e5 0%, #ff6b35 100%);
+            --spark-gradient-light: linear-gradient(135deg, #42a5f5 0%, #ff8a65 100%);
+            --light-section-bg: #fafcff;
+            --light-section-border: #e1f5fe;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--spark-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--spark-gradient);
+            border-radius: 2px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+            color: var(--text-light);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--spark-gradient);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+        }
+        
+        .btn:hover {
+            background: var(--spark-gradient-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .btn:active::after {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .btn-accent {
+            background: var(--spark-orange);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-accent:hover {
+            background: #ff5722;
+            box-shadow: 0 10px 25px rgba(255, 87, 34, 0.4);
+        }
+        
+        /* Navigation Bar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 5px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .logo-text {
+            background: var(--spark-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--spark-gradient);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .logo:hover .logo-icon {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 35px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--spark-gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: 
+                linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%),
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 136, 229, 0.1) 0%, transparent 50%);
+            padding: 180px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(30, 136, 229, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 53, 0.08) 0%, transparent 20%);
+            pointer-events: none;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .hero-spark {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkMove 8s infinite ease-in-out;
+        }
+        
+        .hero-spark:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .hero-spark:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        
+        .hero-spark:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes sparkMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.2); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero h1 {
+            margin-bottom: 25px;
+            animation: fadeInDown 1s ease forwards;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 750px;
+            margin: 0 auto 45px;
+            color: var(--text-light);
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+        
+        /* Introduction Section */
+        #introduction {
+            background: 
+                linear-gradient(135deg, var(--white) 0%, var(--light-gray-2) 100%),
+                radial-gradient(circle at 10% 10%, rgba(30, 136, 229, 0.05) 0%, transparent 20%);
+            position: relative;
+        }
+        
+        #introduction:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 90% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 20% 80%, rgba(30, 136, 229, 0.08) 0%, transparent 20%);
+            pointer-events: none;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+        
+        .intro-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .intro-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .intro-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+            background: var(--spark-gradient) border-box;
+        }
+        
+        .intro-image:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .intro-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .intro-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Product Overview Section - LIGHT THEME */
+        #product {
+            background: var(--light-section-bg);
+            position: relative;
+            border-top: 1px solid var(--light-section-border);
+            border-bottom: 1px solid var(--light-section-border);
+        }
+        
+        #product:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0));
+            z-index: 0;
+        }
+        
+        #product h2 {
+            color: var(--text-dark);
+        }
+        
+        #product h2:after {
+            background: var(--spark-gradient);
+        }
+        
+        #product h3 {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+        }
+        
+        .product-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        .product-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(30, 136, 229, 0.1);
+            transition: all 0.4s ease;
+            border: 3px solid var(--light-section-border);
+            background: var(--white);
+            position: relative;
+        }
+        
+        .product-image:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(30, 136, 229, 0.15);
+            border-color: var(--primary-blue);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .product-video {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-image:hover .product-video {
+            transform: scale(1.05);
+        }
+        
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid var(--light-section-border);
+        }
+        
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .feature-item {
+            flex: 1 1 200px;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(30, 136, 229, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid var(--light-section-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--spark-gradient);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(30, 136, 229, 0.15);
+            border-color: var(--primary-blue);
+        }
+        
+        .feature-item h4 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .feature-item p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        /* Design Section */
+        #design {
+            background: 
+                linear-gradient(135deg, var(--light-blue) 0%, rgba(227, 242, 253, 0.5) 100%),
+                radial-gradient(circle at 80% 20%, rgba(30, 136, 229, 0.1) 0%, transparent 30%);
+            position: relative;
+        }
+        
+        #design:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 60% 70%, rgba(30, 136, 229, 0.1) 0%, transparent 25%);
+            pointer-events: none;
+            animation: float 28s infinite ease-in-out reverse;
+        }
+        
+        .design-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .design-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        .design-step {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--spark-orange);
+        }
+        
+        .design-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--spark-gradient);
+            color: var(--white);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+        }
+        
+        /* Technology & Innovation Section - LIGHT THEME */
+        #technology {
+            background: var(--light-section-bg);
+            position: relative;
+            border-top: 1px solid var(--light-section-border);
+            border-bottom: 1px solid var(--light-section-border);
+        }
+        
+        #technology:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0));
+            z-index: 0;
+        }
+        
+        #technology h2 {
+            color: var(--text-dark);
+            position: relative;
+            z-index: 1;
+        }
+        
+        #technology h2:after {
+            background: var(--spark-gradient);
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tech-card {
+            background: var(--white);
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(30, 136, 229, 0.08);
+            transition: all 0.4s ease;
+            border: 2px solid var(--light-section-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--spark-gradient);
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(30, 136, 229, 0.15);
+            border-color: var(--primary-blue);
+        }
+        
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: var(--spark-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .tech-card h3 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .tech-card p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        /* Future Development Section */
+        .future-development {
+            background: var(--white);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(30, 136, 229, 0.1);
+            margin-top: 80px;
+            transition: all 0.4s ease;
+            border: 2px solid var(--light-section-border);
+            position: relative;
+        }
+        
+        .future-development:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--spark-gradient);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .future-development:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(30, 136, 229, 0.15);
+        }
+        
+        .future-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .future-feature {
+            background: var(--light-section-bg);
+            padding: 30px 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--light-section-border);
+            position: relative;
+        }
+        
+        .future-feature:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-purple);
+        }
+        
+        .future-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(126, 87, 194, 0.1);
+            border-color: var(--accent-purple);
+        }
+        
+        .future-feature h4 {
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .future-icon {
+            font-size: 1.8rem;
+        }
+        
+        /* Market and Business Model Section */
+        .market-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-top: 50px;
+            transition: all 0.4s ease;
+        }
+        
+        .market-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        
+        .market-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .market-item {
+            background: var(--light-blue);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--spark-orange);
+        }
+        
+        .market-item h4 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        
+        .financial-summary {
+            background: var(--accent-green-light);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border-left: 5px solid var(--accent-green);
+        }
+        
+        /* Testing Section */
+        #testing {
+            background: 
+                linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%),
+                radial-gradient(circle at 30% 30%, rgba(30, 136, 229, 0.1) 0%, transparent 30%);
+            position: relative;
+        }
+        
+        #testing:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 70% 10%, rgba(255, 107, 53, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 10% 60%, rgba(30, 136, 229, 0.08) 0%, transparent 25%);
+            pointer-events: none;
+            animation: float 35s infinite ease-in-out;
+        }
+        
+        .challenge-solution {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .challenge-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        
+        .challenge-title {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .solution-title {
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        /* Team Section */
+        #team {
+            background: 
+                linear-gradient(135deg, var(--accent-purple-light) 0%, rgba(243, 229, 245, 0.5) 100%),
+                radial-gradient(circle at 20% 80%, rgba(126, 87, 194, 0.1) 0%, transparent 30%);
+            position: relative;
+        }
+        
+        #team:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 80% 40%, rgba(30, 136, 229, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 25%);
+            pointer-events: none;
+            animation: float 38s infinite ease-in-out;
+        }
+        
+        .team-members {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 45px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            text-align: center;
+            max-width: 320px;
+            background: var(--white);
+            padding: 35px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(30, 136, 229, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-12px) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        
+        .member-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-blue), var(--light-blue-2));
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--primary-blue);
+            transition: all 0.5s ease;
+            border: 6px solid var(--white);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .member-avatar::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+        
+        .team-member:hover .member-avatar {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .team-member:hover .member-avatar::after {
+            left: 100%;
+        }
+        
+        /* Contact Information */
+        .contact-info {
+            background: var(--spark-gradient);
+            color: var(--white);
+            text-align: center;
+            padding: 130px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-info:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            z-index: 0;
+            animation: float 40s infinite ease-in-out;
+        }
+        
+        .contact-info h2 {
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+            -webkit-text-fill-color: var(--white);
+            background: none;
+        }
+        
+        .contact-info h2:after {
+            background: var(--white);
+        }
+        
+        .contact-info p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.25rem;
+            max-width: 850px;
+            margin: 0 auto 55px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 45px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background: rgba(255,255,255,0.15);
+            padding: 30px 35px;
+            border-radius: 18px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.4s ease;
+            min-width: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .contact-item:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .contact-item:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+            border-color: rgba(255,255,255,0.4);
+        }
+        
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.35);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--white);
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(10deg);
+            background: rgba(255,255,255,0.45);
+        }
+        
+        .contact-item-content h4 {
+            color: var(--white);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        
+        .contact-item-content p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.15rem;
+            margin-bottom: 0;
+            text-align: left;
+        }
+        
+        .contact-cta {
+            margin-top: 70px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            color: rgba(255,255,255,0.95);
+        }
+        
+        .contact-btns {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--white);
+            color: var(--spark-orange);
+            border: none;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-btn:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+            color: var(--primary-blue);
+        }
+        
+        .contact-btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .contact-btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.8);
+            color: var(--white);
+        }
+        
+        .contact-btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--white);
+            color: var(--white);
+        }
+        
+        /* Animation Effects */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .fade-in-left {
+            animation: fadeInLeft 1s ease forwards;
+        }
+        
+        .fade-in-right {
+            animation: fadeInRight 1s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        .delay-4 {
+            animation-delay: 0.8s;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 320px;
+            }
+            
+            .contact-item {
+                min-width: 100%;
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+            }
+            
+            .contact-item-content h4,
+            .contact-item-content p {
+                text-align: center;
+            }
+            
+            .contact-btns {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .contact-btn {
+                width: 100%;
+                max-width: 320px;
+            }
+            
+            .team-member {
+                flex: 1 1 100%;
+            }
+            
+            .hero {
+                padding: 150px 0 100px;
+            }
+            
+            .contact-info {
+                padding: 100px 0;
+            }
+            
+            .product-showcase {
+                flex-direction: column;
+            }
+            
+            .member-avatar {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .market-highlights,
+            .future-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-content {
+                flex-direction: column;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .design-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Image Placeholder Styling */
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: 500;
+        }
+        
+        .placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Added styles for team member avatars */
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Logo image styling */
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Image caption styling */
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image,
+        .intro-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image:hover .image-caption,
+        .intro-image:hover .image-caption {
+            transform: translateY(0);
+        }
+        
+        /* Video controls styling */
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Background container styling */
+        .container {
+            position: relative;
+        }
+        
+        .container-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/jianmo.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 10px;
+        }
+        
+        /* Design Section with background */
+        #design .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        #design .container-bg {
+            background-image: url('images/jianmo.png');
+            opacity: 0.08;
+            border-radius: 15px;
+        }
+        
+        /* Armspark specific sparkle animation */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            animation: sparkle 2s infinite ease-in-out;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">
+                    <div class="logo-icon">
+                        <img src="images/logo.jpg" alt="Armspark Logo" class="logo-image">
+                    </div>
+                    <span class="logo-text">Armspark</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#product">Product</a></li>
+                    <li><a href="#design">Design</a></li>
+                    <li><a href="#technology">Technology</a></li>
+                    <li><a href="#testing">Testing</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-spark"></div>
+        <div class="hero-spark"></div>
+        <div class="hero-spark"></div>
+        <div class="container">
+            <h1 class="fade-in">Bilateral Rehabilitation Device for Hemiplegic Patients</h1>
+            <p class="fade-in delay-1">Armspark: Igniting recovery through motion and joy!</p>
+            <p class="fade-in delay-2">Innovative bilateral upper limb rehabilitation training device, making the recovery process more effective and engaging.</p>
+            <div class="hero-btns">
+                <a href="#introduction" class="btn fade-in delay-3">Learn More</a>
+                <a href="#contact" class="btn btn-accent fade-in delay-4">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+        <div class="container">
+            <h2 class="fade-in">Introduction</h2>
+            <div class="intro-content fade-in">
+                <div class="intro-text">
+                    <p>Armspark introduces a revolutionary multiple bilateral upper limb rehabilitation training equipment designed to address the critical needs of patients with neurological conditions, such as stroke, and those with limb loss, who face significant upper limb dysfunction. Unlike conventional large, complex, and unilateral rehabilitation devices, this equipment offers a compact, user-friendly solution that can be used at home, enhancing accessibility and independence.</p>
+                    
+                    <p>The Armspark system features two specialized modes—circular and rectangular motion paths—and an individualized mode allowing free limb movement while controlling a mini-game character, promoting engagement and reducing discomfort during recovery. Its bilateral approach fosters balanced brain coordination, crucial for daily tasks like dressing and feeding, outperforming unilateral systems.</p>
+                    
+                    <p>Our innovative approach combines rehabilitation science with gamification elements to create an engaging and effective recovery experience for patients, sparking new hope in rehabilitation.</p>
+                </div>
+                
+                <div class="intro-image">
+                    <!-- 介绍部分图片 -->
+                    <img src="images/tupian.png" alt="Armspark Rehabilitation Device Introduction">
+                    <div class="image-caption">Visual representation of bilateral rehabilitation training process</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Overview Section -->
+    <section id="product">
+        <div class="container">
+            <h2 class="fade-in">Product Overview</h2>
+            
+            <div class="product-showcase">
+                <div class="product-image fade-in-left delay-1">
+                    <!-- 第一张图片：实物图 -->
+                    <img src="images/shiwu.png" alt="Armspark Bilateral Rehabilitation Device Structure">
+                    <div class="image-caption">Physical device showing mechanical structure and electronic components</div>
+                </div>
+                
+                <div class="product-details fade-in-right delay-2">
+                    <h3>Compact Bilateral Rehabilitation System</h3>
+                    <p>The Armspark device provides effective upper limb rehabilitation through a compact, home-friendly design that significantly improves accessibility for patients.</p>
+                    
+                    <h4 style="margin-top: 30px;">Key Features:</h4>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <h4>Bilateral Training</h4>
+                            <p>Simultaneous training of both limbs for balanced brain coordination</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Three Modes</h4>
+                            <p>Circular, rectangular, and individualized game-based motion paths</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Compact Design</h4>
+                            <p>Fits within a foot-sized base for maximum portability</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Home Use</h4>
+                            <p>Designed for convenient at-home rehabilitation therapy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-showcase" style="margin-top: 60px;">
+                <div class="product-details fade-in-left delay-3">
+                    <h3>Structural Design</h3>
+                    <p>The Armspark structure, designed using Fusion 360, incorporates a lightweight aluminum base, servo-driven shafts, sleeves, gears, and handles, ensuring stability and flexibility. Powered by an Arduino Nano and a 7.4V battery, the system uses a servo driver board for precise control, with a switch for mode selection to enhance reliability.</p>
+                    
+                    <p>The equipment's compact design, fitting within a foot-sized base, maximizes portability and practicality. This innovation benefits patients by offering an entertaining, self-managed rehabilitation process, improving motor function and mental well-being.</p>
+                </div>
+                
+                <div class="product-image fade-in-right delay-4">
+                    <!-- 第二张：渲染视频 -->
+                    <video class="product-video" controls autoplay muted loop>
+                        <source src="images/xuanran.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="image-caption">3D rendering animation showing device operation and design details</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Section with Background -->
+    <section id="design">
+        <div class="container-bg"></div>
+        <div class="container">
+            <h2 class="fade-in">Design Process</h2>
+            <div class="design-content fade-in delay-1">
+                <p>Structurally, we used Fusion 360 to design the Armspark equipment. We employed the following specific strategies: Stretch, cut, trim, circle, square, lock size, spline, straight line, circular array, mirror, vertical, colinear, tangent, concentric, etc. to draw every part of the equipment.</p>
+                
+                <div class="design-steps">
+                    <div class="design-step">
+                        <div class="step-number">1</div>
+                        <h4>Aluminum Plate</h4>
+                        <p>This is the main component of the base as well as the arms that extend out.</p>
+                    </div>
+                    
+                    <div class="design-step">
+                        <div class="step-number">2</div>
+                        <h4>Shaft and Sleeve</h4>
+                        <p>These are 3D printed supporting components that provide structural integrity.</p>
+                    </div>
+                    
+                    <div class="design-step">
+                        <div class="step-number">3</div>
+                        <h4>Gears</h4>
+                        <p>These standardize all servo movement so the system moves together - one gear will affect the other.</p>
+                    </div>
+                    
+                    <div class="design-step">
+                        <div class="step-number">4</div>
+                        <h4>Connecting Rod</h4>
+                        <p>Connects the base to the servo gear, enabling precise movement transmission.</p>
+                    </div>
+                    
+                    <div class="design-step">
+                        <div class="step-number">5</div>
+                        <h4>Handle Design</h4>
+                        <p>Designed for easy grip, with 3 servos powering the rotational movement on the wrist.</p>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 40px;">After the final diagram was complete, we used the laser cutter to cut out the acrylic base plate and connecting rod and we used the 3D printer to print out the shaft, sleeve, and gears. The building process was relatively straightforward though; we start from the base and accumulate and go higher to ensure the stability of the equipment in case of issue with breaking the equipment due to unstable structure.</p>
+                
+                <p>After testing, we discovered that the acrylic material can't withhold enough weight to carry out the rehabilitation process. This made us change to the aluminum material base plate and connecting rod to make it more stable to withhold the potential weight of an arm. Lastly, we repeat the process to build the second used for the opposite arm and we added the handle to each of them to make the equipment more flexible in terms of the extent of movement.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology & Innovation Section -->
+    <section id="technology">
+        <div class="container">
+            <h2 class="fade-in">Technology & Innovation</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-card fade-in-left delay-1">
+                    <div class="tech-icon">⚙️</div>
+                    <h3>Precision Control System</h3>
+                    <p>Powered by an Arduino Nano and 7.4V battery, with servo driver board for precise movement control. Mode selection switch enhances reliability and user experience.</p>
+                </div>
+                
+                <div class="tech-card fade-in delay-2">
+                    <div class="tech-icon">🔄</div>
+                    <h3>Bilateral Coordination</h3>
+                    <p>The bilateral approach fosters balanced brain coordination, crucial for daily tasks like dressing and feeding, outperforming traditional unilateral systems.</p>
+                </div>
+                
+                <div class="tech-card fade-in-right delay-3">
+                    <div class="tech-icon">🎮</div>
+                    <h3>Gamified Rehabilitation</h3>
+                    <p>Individualized mode allows free limb movement while controlling a mini-game character, promoting engagement and reducing discomfort during recovery.</p>
+                </div>
+            </div>
+            
+            <!-- 未来发展部分 -->
+            <div class="future-development fade-in delay-4">
+                <h3>Armspark Future Development Roadmap</h3>
+                <p>Future developments of Armspark could include voice control, grip strength monitoring, and enhanced stability to support additional modes, further personalizing and optimizing rehabilitation for diverse patient needs.</p>
+                
+                <div class="future-features">
+                    <div class="future-feature">
+                        <h4><span class="future-icon">🎤</span> Voice Control Integration</h4>
+                        <p>Voice control could be added as an alternative way to switch modes. It reduces the work patients have to do to conveniently change to a different mode, enhancing accessibility for patients with limited mobility.</p>
+                    </div>
+                    
+                    <div class="future-feature">
+                        <h4><span class="future-icon">💪</span> Grip Strength Monitoring</h4>
+                        <p>A new feature could be added to also recovering grip strength and pose an emphasis on finger and grip rehabilitation as well. Grip strength monitoring can be implemented on the wrist to provide comprehensive rehabilitation.</p>
+                    </div>
+                    
+                    <div class="future-feature">
+                        <h4><span class="future-icon">🏗️</span> Enhanced Stability & Versatility</h4>
+                        <p>Future enhanced stability would increase the device's potential to conduct rehabilitation for a more variety of diseases or people due to the fact that they will be more resilient. This will enable support for additional rehabilitation modes and exercises.</p>
+                    </div>
+                    
+                    <div class="future-feature">
+                        <h4><span class="future-icon">📊</span> Data Analytics & Progress Tracking</h4>
+                        <p>Integration of data analytics to track patient progress over time, providing personalized rehabilitation plans and real-time feedback to both patients and healthcare providers.</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px; padding: 20px; background: rgba(126, 87, 194, 0.1); border-radius: 10px;">
+                    <h4 style="color: var(--accent-purple);">Long-term Vision</h4>
+                    <p>These future compatible developments will transform rehabilitation from a standardized process to a personalized journey. By incorporating AI-driven adaptive algorithms, we aim to create a system that learns from each patient's progress and adjusts therapy in real-time. Future collaborations with medical research institutions will ensure our solutions remain at the forefront of rehabilitation technology, adapting to the evolving needs of different patients and clinical environments.</p>
+                </div>
+            </div>
+            
+            <!-- 市场分析内容 -->
+            <div class="market-content fade-in delay-4">
+                <h3>Market Analysis & Business Model</h3>
+                <p>Armspark aims to help patients with upper limb dysfunction, especially those with hemiplegia. It is estimated that approximately 20 million patients in China require long-term rehabilitation. Our devices are designed for easy home use and reduce the stress of frequent hospital visits.</p>
+                
+                <div class="market-highlights">
+                    <div class="market-item">
+                        <h4>Entertainment Integration</h4>
+                        <p>The Armspark devices' entertainment modes prevent patients from becoming bored during rehabilitation, thereby increasing usage frequency and rehabilitation effectiveness.</p>
+                    </div>
+                    <div class="market-item">
+                        <h4>Psychological Benefits</h4>
+                        <p>Our devices not only provide physical assistance but also improve patients' psychological well-being, allowing them to experience positive changes during rehabilitation.</p>
+                    </div>
+                    <div class="market-item">
+                        <h4>Affordable Solutions</h4>
+                        <p>By providing affordable solutions, Armspark hopes to significantly improve patients' quality of life.</p>
+                    </div>
+                </div>
+                
+                <div class="financial-summary">
+                    <h4>Business Model & Financial Projection</h4>
+                    <p>This innovation targets healthcare facilities and upper limb rehabilitation patients, aiming for <strong>1,000 unit sales in the first year</strong> at <strong>¥700 each</strong>, generating <strong>¥700,000 in revenue</strong>. With slightly low-competitive pricing and a <strong>45% gross margin</strong>, it ensures sustainable operations, meeting demand for affordable rehabilitation solutions.</p>
+                    
+                    <h4 style="margin-top: 20px;">Market Strategy</h4>
+                    <p>Simultaneously, considering our market promotion strategy, we plan to enhance market awareness of Armspark equipment through a combination of online and offline methods to expand our customer base.</p>
+                    
+                    <h4 style="margin-top: 20px;">R&D & Future Development</h4>
+                    <p>To ensure continuous technological innovation and product improvement, we also plan to establish a research and development team and maintain collaborations with medical research institutions to ensure Armspark remains technologically advanced. The team will hold regular brainstorming sessions to generate new ideas, diversify product functions, and ensure our solutions can adapt to the needs of different patients and changing environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testing Section -->
+    <section id="testing">
+        <div class="container">
+            <h2 class="fade-in">Testing & Development</h2>
+            
+            <div class="fade-in delay-1">
+                <p>Testing revealed challenges such as gear collisions, servo range limitations, and material durability, which were systematically addressed through innovative solutions:</p>
+            </div>
+            
+            <div class="challenge-solution">
+                <div class="challenge-card fade-in-left delay-2">
+                    <h4 class="challenge-title">Challenge: Gear Collisions</h4>
+                    <p>Initial testing revealed issues with gear collisions during operation, potentially damaging the mechanical components.</p>
+                    <h4 class="solution-title">Solution: Coordinate Adjustments</h4>
+                    <p>Implemented precise coordinate adjustments and optimized gear positioning to eliminate collisions and ensure smooth operation.</p>
+                </div>
+                
+                <div class="challenge-card fade-in delay-3">
+                    <h4 class="challenge-title">Challenge: Servo Range Limitations</h4>
+                    <p>Servo motors had limited range of motion, restricting the device's rehabilitation capabilities.</p>
+                    <h4 class="solution-title">Solution: Joint Limit Functions</h4>
+                    <p>Developed and implemented joint limit functions to maximize servo range while preventing damage from over-extension.</p>
+                </div>
+                
+                <div class="challenge-card fade-in-right delay-4">
+                    <h4 class="challenge-title">Challenge: Material Durability</h4>
+                    <p>Original acrylic components couldn't withstand the weight and stress of rehabilitation exercises.</p>
+                    <h4 class="solution-title">Solution: Material Upgrades</h4>
+                    <p>Upgraded to aluminum for base plate and connecting rods, significantly improving durability and weight capacity.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;" class="fade-in">
+                <p>Additional improvements included implementing a debounce function and correcting baud rate to 9600 to ensure smooth servo operation. The Armspark equipment now provides reliable, effective rehabilitation training for hemiplegic patients.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <h2 class="fade-in">Armspark Team</h2>
+            <p class="fade-in delay-1">We are a passionate and innovative team dedicated to improving rehabilitation experiences for hemiplegic patients through our Armspark technology.</p>
+            
+            <div class="team-members">
+                <div class="team-member fade-in-left delay-2">
+                    <!-- Zhichen Guan 的头像 -->
+                    <div class="member-avatar" style="background-image: url('images/Zhichen Guan.png');">
+                        <img src="images/Zhichen Guan.png" alt="Zhichen Guan" class="avatar-image" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--light-blue), var(--light-blue-2))'; this.parentElement.innerHTML='Z';">
+                    </div>
+                    <h3>Zhichen Guan</h3>
+                    <p>CEO & CTO</p>
+                    <p>Jason has experience in business management, economics, and many other leadership expertise. He has worked on the development and testing of Armspark, embracing his computer science and graphic design skills and conducting in depth analysis of how the product will operate. His unique experience and sets of skill help ensure the team is on the right track making the right decisions in the right time.</p>
+                </div>
+                
+                <div class="team-member fade-in-right delay-3">
+                    <!-- Matthew Zilang Long 的头像 -->
+                    <div class="member-avatar" style="background-image: url('images/Matthew Zilang Long.png');">
+                        <img src="images/Matthew Zilang Long.png" alt="Matthew Zilang Long" class="avatar-image" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, var(--light-blue), var(--light-blue-2))'; this.parentElement.innerHTML='M';">
+                    </div>
+                    <h3>Matthew Zilang Long</h3>
+                    <p>CFO & COO</p>
+                    <p>Matthew focuses on financial management and operational optimization, driving the achievement of the Armspark team's goals. Experience working with a diverse team, He led the team to implement innovative solutions to improve efficiency and sustainability.</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;" class="fade-in delay-4">
+                <p>The Armspark team bonded over a shared passion for innovation and observed shortcomings in existing upper limb rehabilitation devices, leading us to create a spark of change in this field through technology.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section id="contact" class="contact-info">
+        <div class="container">
+            <h2 class="fade-in">Contact Armspark</h2>
+            <p class="fade-in delay-1">If you're interested in Armspark or have any collaboration inquiries, please don't hesitate to contact us. We look forward to partnering with you to advance rehabilitation medical technology.</p>
+            
+            <div class="contact-details">
+                <div class="contact-item fade-in-left delay-1">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-item-content">
+                        <h4>Address</h4>
+                        <p>Armspark Rehabilitation Technology Center</p>
+                        <p>Guangzhou, China</p>
+                        <p>Postal Code: 510000</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item fade-in delay-2">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-item-content">
+                        <h4>Phone</h4>
+                        <p>+86 18826260838</p>
+                        <p>Working Hours: Mon-Fri 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item fade-in-right delay-3">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-item-content">
+                        <h4>Email</h4>
+                        <p>Email: zhichen.guan11686-bigz@basischina.com</p>
+                        <p>Partnership: partner@armspark.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-cta fade-in delay-4">
+                <p>Contact us now for more Armspark product information or to schedule a demo</p>
+                <div class="contact-btns">
+                    <a href="tel:+8618826260838" class="contact-btn">Call Now</a>
+                    <a href="mailto:zhichen.guan11686-bigz@basischina.com" class="contact-btn contact-btn-secondary">Send Email</a>
+                </div>
+            </div>
+            
+            <div style="margin-top: 70px;" class="fade-in">
+                <a href="#home" class="btn btn-accent">Back to Top</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Enhanced scroll animation effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.classList.contains('delay-1') ? 200 :
+                                     entry.target.classList.contains('delay-2') ? 400 :
+                                     entry.target.classList.contains('delay-3') ? 600 :
+                                     entry.target.classList.contains('delay-4') ? 800 : 0;
+                        
+                        setTimeout(() => {
+                            entry.target.style.opacity = 1;
+                            entry.target.style.transform = 'translate(0, 0)';
+                        }, delay);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = 0;
+                if (element.classList.contains('fade-in-left')) {
+                    element.style.transform = 'translateX(-40px)';
+                } else if (element.classList.contains('fade-in-right')) {
+                    element.style.transform = 'translateX(40px)';
+                } else {
+                    element.style.transform = 'translateY(40px)';
+                }
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Header scroll effect
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Add animation to feature icons on scroll
+            const featureIcons = document.querySelectorAll('.tech-icon, .future-icon');
+            const iconObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'float 3s infinite ease-in-out';
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            featureIcons.forEach(icon => {
+                iconObserver.observe(icon);
+            });
+            
+            // Preload images and videos to prevent flickering
+            const mediaUrls = [
+                'images/logo.jpg',
+                'images/tupian.png',
+                'images/shiwu.png',
+                'images/xuanran.mp4',
+                'images/Zhichen Guan.png',
+                'images/Matthew Zilang Long.png',
+                'images/jianmo.png'
+            ];
+            
+            mediaUrls.forEach(url => {
+                if (url.endsWith('.mp4')) {
+                    const video = document.createElement('video');
+                    video.src = url;
+                    video.preload = 'auto';
+                } else {
+                    const img = new Image();
+                    img.src = url;
+                }
+            });
+            
+            // Auto-play videos when they come into view
+            const videos = document.querySelectorAll('video');
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play();
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            videos.forEach(video => {
+                videoObserver.observe(video);
+            });
+            
+            // Create sparkle effects for Armspark branding
+            function createSparkles() {
+                const sparklesCount = 10;
+                const body = document.querySelector('body');
+                
+                for (let i = 0; i < sparklesCount; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = `${Math.random() * 100}vw`;
+                    sparkle.style.top = `${Math.random() * 100}vh`;
+                    sparkle.style.animationDelay = `${Math.random() * 2}s`;
+                    sparkle.style.animationDuration = `${1 + Math.random() * 2}s`;
+                    body.appendChild(sparkle);
+                    
+                    // Remove and recreate sparkles periodically
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 5000 + Math.random() * 5000);
+                }
+            }
+            
+            // Create initial sparkles
+            createSparkles();
+            
+            // Create new sparkles every 3 seconds
+            setInterval(createSparkles, 3000);
+        });
+    </script>
+</body>
+</html>
